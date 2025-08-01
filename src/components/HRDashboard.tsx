@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import HRAssistantChat from '@/components/HRAssistantChat';
+import LeaveManagement from '@/components/LeaveManagement';
+import AttendanceTracking from '@/components/AttendanceTracking';
+import SalaryBenefits from '@/components/SalaryBenefits';
+import DocumentManagement from '@/components/DocumentManagement';
 import { 
   Calendar, 
   Clock, 
@@ -14,18 +19,24 @@ import {
   CheckCircle2,
   UserCheck,
   CreditCard,
-  HelpCircle
+  HelpCircle,
+  Bell,
+  LogOut
 } from 'lucide-react';
 
 const HRDashboard = () => {
   const [selectedTab, setSelectedTab] = useState('dashboard');
 
   const quickActions = [
-    { icon: Calendar, title: 'Apply Leave', description: 'Submit leave request', color: 'bg-primary text-primary-foreground' },
-    { icon: Clock, title: 'Attendance', description: 'View attendance records', color: 'bg-success text-success-foreground' },
-    { icon: CreditCard, title: 'Salary Slip', description: 'Download pay slip', color: 'bg-warning text-warning-foreground' },
-    { icon: FileText, title: 'Documents', description: 'Manage documents', color: 'bg-accent text-accent-foreground' },
+    { icon: Calendar, title: 'Apply Leave', description: 'Submit leave request', color: 'bg-primary text-primary-foreground', action: 'leave' },
+    { icon: Clock, title: 'Attendance', description: 'View attendance records', color: 'bg-success text-success-foreground', action: 'attendance' },
+    { icon: CreditCard, title: 'Salary Slip', description: 'Download pay slip', color: 'bg-warning text-warning-foreground', action: 'salary' },
+    { icon: FileText, title: 'Documents', description: 'Manage documents', color: 'bg-accent text-accent-foreground', action: 'documents' },
   ];
+
+  const handleQuickAction = (action: string) => {
+    setSelectedTab(action);
+  };
 
   const stats = [
     { title: 'Leave Balance', value: '15 Days', icon: Calendar, trend: '+2 from last month' },
@@ -44,21 +55,40 @@ const HRDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-card border-b border-border px-6 py-4">
+      <header className="bg-gradient-to-r from-card to-accent/5 border-b border-border px-6 py-4 shadow-sm">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">HR Portal</h1>
-            <p className="text-muted-foreground">Welcome back, John Doe</p>
+            <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+              <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
+                <Users className="h-5 w-5 text-primary-foreground" />
+              </div>
+              CompanyHR Portal
+            </h1>
+            <p className="text-muted-foreground">Welcome back, John Doe • Employee ID: EMP001</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Button variant="outline" size="icon">
+                <Bell className="h-4 w-4" />
+              </Button>
+              <div className="absolute -top-1 -right-1 h-3 w-3 bg-destructive rounded-full flex items-center justify-center">
+                <span className="text-xs text-destructive-foreground">3</span>
+              </div>
+            </div>
             <Button variant="outline" size="icon">
               <HelpCircle className="h-4 w-4" />
             </Button>
             <Button variant="outline" size="icon">
               <Settings className="h-4 w-4" />
             </Button>
-            <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground text-sm font-medium">JD</span>
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+                <span className="text-primary-foreground text-sm font-medium">JD</span>
+              </div>
+              <Button variant="ghost" size="sm">
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </Button>
             </div>
           </div>
         </div>
@@ -129,6 +159,7 @@ const HRDashboard = () => {
                         key={index} 
                         variant="outline" 
                         className="h-auto p-4 flex flex-col items-center gap-2"
+                        onClick={() => handleQuickAction(action.action)}
                       >
                         <div className={`h-12 w-12 rounded-lg ${action.color} flex items-center justify-center`}>
                           <action.icon className="h-6 w-6" />
@@ -170,75 +201,18 @@ const HRDashboard = () => {
           )}
 
           {selectedTab === 'chat' && (
-            <Card className="h-[600px]">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5" />
-                  HR Assistant
-                </CardTitle>
-                <CardDescription>Ask me anything about HR policies, leaves, salary, or benefits</CardDescription>
-              </CardHeader>
-              <CardContent className="flex flex-col h-full">
-                <div className="flex-1 bg-accent/5 rounded-lg p-4 mb-4 overflow-y-auto">
-                  <div className="space-y-4">
-                    <div className="bg-primary text-primary-foreground rounded-lg p-3 max-w-xs">
-                      <p className="text-sm">Hello! I'm your HR assistant. How can I help you today?</p>
-                      <span className="text-xs opacity-75">9:00 AM</span>
-                    </div>
-                    
-                    <div className="bg-card rounded-lg p-3 max-w-xs ml-auto">
-                      <p className="text-sm">I want to apply for leave</p>
-                      <span className="text-xs text-muted-foreground">9:01 AM</span>
-                    </div>
-                    
-                    <div className="bg-primary text-primary-foreground rounded-lg p-3 max-w-xs">
-                      <p className="text-sm">I'd be happy to help you apply for leave! What type of leave would you like to apply for and what dates?</p>
-                      <span className="text-xs opacity-75">9:01 AM</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex gap-2">
-                  <input 
-                    type="text" 
-                    placeholder="Type your message..."
-                    className="flex-1 px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-                  />
-                  <Button>Send</Button>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {selectedTab === 'leave' && (
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Leave Management</CardTitle>
-                  <CardDescription>Apply for leave and track your leave balance</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="bg-accent/10 rounded-lg p-4">
-                      <h3 className="font-semibold text-lg">15</h3>
-                      <p className="text-sm text-muted-foreground">Annual Leave</p>
-                    </div>
-                    <div className="bg-accent/10 rounded-lg p-4">
-                      <h3 className="font-semibold text-lg">5</h3>
-                      <p className="text-sm text-muted-foreground">Sick Leave</p>
-                    </div>
-                    <div className="bg-accent/10 rounded-lg p-4">
-                      <h3 className="font-semibold text-lg">2</h3>
-                      <p className="text-sm text-muted-foreground">Personal Leave</p>
-                    </div>
-                  </div>
-                  <div className="mt-6">
-                    <Button variant="hero" size="lg">Apply for Leave</Button>
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="h-[calc(100vh-200px)]">
+              <HRAssistantChat />
             </div>
           )}
+
+          {selectedTab === 'leave' && <LeaveManagement />}
+          
+          {selectedTab === 'attendance' && <AttendanceTracking />}
+          
+          {selectedTab === 'salary' && <SalaryBenefits />}
+          
+          {selectedTab === 'documents' && <DocumentManagement />}
         </main>
       </div>
     </div>
