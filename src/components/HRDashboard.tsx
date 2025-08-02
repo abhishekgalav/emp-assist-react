@@ -105,10 +105,20 @@ const HRDashboard = () => {
               { id: 'salary', label: 'Salary & Benefits', icon: CreditCard },
               { id: 'documents', label: 'Documents', icon: FileText },
               { id: 'chat', label: 'HR Assistant', icon: MessageSquare },
+              { id: 'hr-reporting', label: 'HR Reports', icon: FileText },
+              { id: 'admin-reporting', label: 'Admin Reports', icon: Settings },
             ].map((item) => (
               <button
                 key={item.id}
-                onClick={() => setSelectedTab(item.id)}
+                onClick={() => {
+                  if (item.id === 'hr-reporting') {
+                    window.location.href = '/hr-reporting';
+                  } else if (item.id === 'admin-reporting') {
+                    window.location.href = '/admin-reporting';
+                  } else {
+                    setSelectedTab(item.id);
+                  }
+                }}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                   selectedTab === item.id 
                     ? 'bg-primary text-primary-foreground' 
