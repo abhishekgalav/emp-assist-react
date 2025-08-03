@@ -14,11 +14,12 @@ import AttendanceAnalysis from "./components/AttendanceAnalysis";
 import SalaryManagement from "./components/SalaryManagement";
 import UserPanel from "./components/UserPanel";
 import { HRSidebar } from "./components/HRSidebar";
+import { EmployeeSidebar } from "./components/EmployeeSidebar";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [showUserPanel, setShowUserPanel] = useState(false);
+  const [showEmployeePanel, setShowEmployeePanel] = useState(false);
 
   return (
   <QueryClientProvider client={queryClient}>
@@ -28,19 +29,23 @@ const App = () => {
       <BrowserRouter>
         <SidebarProvider>
           <div className="flex min-h-screen w-full">
-            <HRSidebar onDashboardClick={() => setShowUserPanel(true)} />
+            {showEmployeePanel ? (
+              <EmployeeSidebar onBackToHR={() => setShowEmployeePanel(false)} />
+            ) : (
+              <HRSidebar onDashboardClick={() => setShowEmployeePanel(true)} />
+            )}
             <div className="flex-1 flex flex-col">
               <header className="h-14 flex items-center border-b bg-background px-4">
                 <SidebarTrigger />
                 <div className="ml-4">
                   <h2 className="text-lg font-semibold text-foreground">
-                    {showUserPanel ? "Employee Panel" : "HR Management System"}
+                    {showEmployeePanel ? "Employee Portal" : "HR Management System"}
                   </h2>
                 </div>
               </header>
               <main className="flex-1 overflow-auto">
-                {showUserPanel ? (
-                  <UserPanel onBackToAdmin={() => setShowUserPanel(false)} />
+                {showEmployeePanel ? (
+                  <UserPanel onBackToAdmin={() => setShowEmployeePanel(false)} />
                 ) : (
                   <Routes>
                     <Route path="/" element={<Index />} />
