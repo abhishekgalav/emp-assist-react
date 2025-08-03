@@ -30,7 +30,11 @@ const reportItems = [
   { title: "Admin Reports", url: "/admin-reporting", icon: TrendingUp },
 ];
 
-export function HRSidebar() {
+interface HRSidebarProps {
+  onDashboardClick?: () => void;
+}
+
+export function HRSidebar({ onDashboardClick }: HRSidebarProps) {
   const { state } = useSidebar();
   const location = useLocation();
   const currentPath = location.pathname;
@@ -39,6 +43,13 @@ export function HRSidebar() {
   const isActive = (path: string) => currentPath === path;
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
     isActive ? "bg-primary/10 text-primary font-medium border-r-2 border-primary" : "hover:bg-accent/50 text-muted-foreground hover:text-foreground";
+
+  const handleDashboardClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onDashboardClick) {
+      onDashboardClick();
+    }
+  };
 
   return (
     <Sidebar className={collapsed ? "w-16" : "w-64"} collapsible="icon">
@@ -69,14 +80,24 @@ export function HRSidebar() {
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="h-10">
-                    <NavLink 
-                      to={item.url} 
-                      end 
-                      className={({ isActive }) => `${getNavCls({ isActive })} flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200`}
-                    >
-                      <item.icon className="h-5 w-5 flex-shrink-0" />
-                      {!collapsed && <span className="truncate">{item.title}</span>}
-                    </NavLink>
+                    {item.url === "/" ? (
+                      <button
+                        onClick={handleDashboardClick}
+                        className={`${isActive(item.url) ? "bg-primary/10 text-primary font-medium border-r-2 border-primary" : "hover:bg-accent/50 text-muted-foreground hover:text-foreground"} flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 w-full text-left`}
+                      >
+                        <item.icon className="h-5 w-5 flex-shrink-0" />
+                        {!collapsed && <span className="truncate">{item.title}</span>}
+                      </button>
+                    ) : (
+                      <NavLink 
+                        to={item.url} 
+                        end 
+                        className={({ isActive }) => `${getNavCls({ isActive })} flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200`}
+                      >
+                        <item.icon className="h-5 w-5 flex-shrink-0" />
+                        {!collapsed && <span className="truncate">{item.title}</span>}
+                      </NavLink>
+                    )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

@@ -29,11 +29,17 @@ const SalaryManagement = () => {
       name: "John Doe",
       position: "Senior Software Engineer",
       department: "Engineering",
-      baseSalary: 95000,
+      basicPay: 70000,
+      hra: 21000,
+      lta: 2400,
+      specialAllowance: 8000,
       bonus: 8500,
-      allowances: 2500,
-      deductions: 1200,
-      netSalary: 104800,
+      providentFund: 8400,
+      professionalTax: 2400,
+      otherDeductions: 500,
+      totalEarnings: 109900,
+      totalDeductions: 11300,
+      netSalary: 98600,
       lastRaise: "2024-01-15",
       avatar: "/placeholder.svg"
     },
@@ -42,11 +48,17 @@ const SalaryManagement = () => {
       name: "Jane Smith",
       position: "Product Manager",
       department: "Product",
-      baseSalary: 85000,
+      basicPay: 60000,
+      hra: 18000,
+      lta: 2000,
+      specialAllowance: 6000,
       bonus: 12000,
-      allowances: 3000,
-      deductions: 950,
-      netSalary: 99050,
+      providentFund: 7200,
+      professionalTax: 2400,
+      otherDeductions: 300,
+      totalEarnings: 98000,
+      totalDeductions: 9900,
+      netSalary: 88100,
       lastRaise: "2024-02-01",
       avatar: "/placeholder.svg"
     },
@@ -55,11 +67,17 @@ const SalaryManagement = () => {
       name: "Mike Johnson",
       position: "UX Designer",
       department: "Design",
-      baseSalary: 72000,
+      basicPay: 55000,
+      hra: 16500,
+      lta: 1800,
+      specialAllowance: 4500,
       bonus: 5500,
-      allowances: 1800,
-      deductions: 780,
-      netSalary: 78520,
+      providentFund: 6600,
+      professionalTax: 2400,
+      otherDeductions: 200,
+      totalEarnings: 83300,
+      totalDeductions: 9200,
+      netSalary: 74100,
       lastRaise: "2023-11-20",
       avatar: "/placeholder.svg"
     },
@@ -68,11 +86,17 @@ const SalaryManagement = () => {
       name: "Sarah Wilson",
       position: "Marketing Manager",
       department: "Marketing",
-      baseSalary: 78000,
+      basicPay: 58000,
+      hra: 17400,
+      lta: 2000,
+      specialAllowance: 5500,
       bonus: 9200,
-      allowances: 2200,
-      deductions: 890,
-      netSalary: 88510,
+      providentFund: 6960,
+      professionalTax: 2400,
+      otherDeductions: 400,
+      totalEarnings: 92100,
+      totalDeductions: 9760,
+      netSalary: 82340,
       lastRaise: "2024-03-10",
       avatar: "/placeholder.svg"
     }
@@ -272,10 +296,10 @@ const SalaryManagement = () => {
                   <TableRow>
                     <TableHead>Employee</TableHead>
                     <TableHead>Position</TableHead>
-                    <TableHead>Base Salary</TableHead>
-                    <TableHead>Bonus</TableHead>
+                    <TableHead>Basic Pay</TableHead>
+                    <TableHead>Total Earnings</TableHead>
+                    <TableHead>Total Deductions</TableHead>
                     <TableHead>Net Salary</TableHead>
-                    <TableHead>Last Raise</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -296,20 +320,22 @@ const SalaryManagement = () => {
                       </TableCell>
                       <TableCell>{employee.position}</TableCell>
                       <TableCell>
-                        <div className="font-medium">{formatCurrency(employee.baseSalary)}</div>
+                        <div className="font-medium">{formatCurrency(employee.basicPay)}</div>
                       </TableCell>
                       <TableCell>
                         <Badge className="bg-success/10 text-success border-success/20">
-                          {formatCurrency(employee.bonus)}
+                          {formatCurrency(employee.totalEarnings)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge className="bg-destructive/10 text-destructive border-destructive/20">
+                          {formatCurrency(employee.totalDeductions)}
                         </Badge>
                       </TableCell>
                       <TableCell>
                         <div className="font-semibold text-primary">
                           {formatCurrency(employee.netSalary)}
                         </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="text-sm text-muted-foreground">{employee.lastRaise}</div>
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex items-center gap-2 justify-end">
@@ -326,44 +352,144 @@ const SalaryManagement = () => {
                                   Update salary components for this employee
                                 </DialogDescription>
                               </DialogHeader>
-                              <div className="space-y-4">
-                                <div className="space-y-2">
-                                  <Label htmlFor="baseSalary">Base Salary</Label>
-                                  <Input
-                                    id="baseSalary"
-                                    type="number"
-                                    defaultValue={employee.baseSalary}
-                                    placeholder="Enter base salary"
-                                  />
+                              <div className="space-y-4 max-h-96 overflow-y-auto">
+                                <div className="grid grid-cols-2 gap-4">
+                                  <div className="space-y-2">
+                                    <Label htmlFor="basicPay">Basic Pay</Label>
+                                    <Input
+                                      id="basicPay"
+                                      type="number"
+                                      defaultValue={employee.basicPay}
+                                      placeholder="Enter basic pay"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label htmlFor="hra">HRA</Label>
+                                    <Input
+                                      id="hra"
+                                      type="number"
+                                      defaultValue={employee.hra}
+                                      placeholder="House Rent Allowance"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label htmlFor="lta">LTA</Label>
+                                    <Input
+                                      id="lta"
+                                      type="number"
+                                      defaultValue={employee.lta}
+                                      placeholder="Leave Travel Allowance"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label htmlFor="specialAllowance">Special Allowance</Label>
+                                    <Input
+                                      id="specialAllowance"
+                                      type="number"
+                                      defaultValue={employee.specialAllowance}
+                                      placeholder="Special allowance"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label htmlFor="bonus">Bonus / Incentives</Label>
+                                    <Input
+                                      id="bonus"
+                                      type="number"
+                                      defaultValue={employee.bonus}
+                                      placeholder="Bonus amount"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label htmlFor="providentFund">Provident Fund (PF)</Label>
+                                    <Input
+                                      id="providentFund"
+                                      type="number"
+                                      defaultValue={employee.providentFund}
+                                      placeholder="PF deduction"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label htmlFor="professionalTax">Professional Tax</Label>
+                                    <Input
+                                      id="professionalTax"
+                                      type="number"
+                                      defaultValue={employee.professionalTax}
+                                      placeholder="Professional tax"
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label htmlFor="otherDeductions">Other Deductions</Label>
+                                    <Input
+                                      id="otherDeductions"
+                                      type="number"
+                                      defaultValue={employee.otherDeductions}
+                                      placeholder="Other deductions"
+                                    />
+                                  </div>
                                 </div>
-                                <div className="space-y-2">
-                                  <Label htmlFor="bonus">Bonus</Label>
-                                  <Input
-                                    id="bonus"
-                                    type="number"
-                                    defaultValue={employee.bonus}
-                                    placeholder="Enter bonus amount"
-                                  />
+                                
+                                {/* Salary Summary */}
+                                <div className="mt-6 p-4 bg-accent/5 rounded-lg border">
+                                  <h4 className="font-semibold mb-3">Salary Summary</h4>
+                                  <div className="grid grid-cols-2 gap-4 text-sm">
+                                    <div className="space-y-2">
+                                      <div className="flex justify-between">
+                                        <span>Basic Pay:</span>
+                                        <span className="font-medium">{formatCurrency(employee.basicPay)}</span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span>HRA:</span>
+                                        <span className="font-medium">{formatCurrency(employee.hra)}</span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span>LTA:</span>
+                                        <span className="font-medium">{formatCurrency(employee.lta)}</span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span>Special Allowance:</span>
+                                        <span className="font-medium">{formatCurrency(employee.specialAllowance)}</span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span>Bonus:</span>
+                                        <span className="font-medium">{formatCurrency(employee.bonus)}</span>
+                                      </div>
+                                      <div className="border-t pt-2">
+                                        <div className="flex justify-between font-semibold text-success">
+                                          <span>Total Earnings:</span>
+                                          <span>{formatCurrency(employee.totalEarnings)}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                      <div className="flex justify-between">
+                                        <span>Provident Fund:</span>
+                                        <span className="font-medium">{formatCurrency(employee.providentFund)}</span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span>Professional Tax:</span>
+                                        <span className="font-medium">{formatCurrency(employee.professionalTax)}</span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span>Other Deductions:</span>
+                                        <span className="font-medium">{formatCurrency(employee.otherDeductions)}</span>
+                                      </div>
+                                      <div className="border-t pt-2 mt-8">
+                                        <div className="flex justify-between font-semibold text-destructive">
+                                          <span>Total Deductions:</span>
+                                          <span>{formatCurrency(employee.totalDeductions)}</span>
+                                        </div>
+                                      </div>
+                                      <div className="border-t pt-2">
+                                        <div className="flex justify-between font-bold text-primary text-lg">
+                                          <span>Net Salary:</span>
+                                          <span>{formatCurrency(employee.netSalary)}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
-                                <div className="space-y-2">
-                                  <Label htmlFor="allowances">Allowances</Label>
-                                  <Input
-                                    id="allowances"
-                                    type="number"
-                                    defaultValue={employee.allowances}
-                                    placeholder="Enter allowances"
-                                  />
-                                </div>
-                                <div className="space-y-2">
-                                  <Label htmlFor="deductions">Deductions</Label>
-                                  <Input
-                                    id="deductions"
-                                    type="number"
-                                    defaultValue={employee.deductions}
-                                    placeholder="Enter deductions"
-                                  />
-                                </div>
-                                <div className="flex justify-end space-x-2">
+                                
+                                <div className="flex justify-end space-x-2 pt-4">
                                   <Button variant="outline">Cancel</Button>
                                   <Button>Update Salary</Button>
                                 </div>
