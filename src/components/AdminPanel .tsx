@@ -2,28 +2,13 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Calendar, 
-  Clock, 
-  MessageSquare, 
-  Users, 
-  FileText, 
-  Settings,
-  TrendingUp,
-  AlertCircle,
-  UserCheck,
-  CreditCard,
-  HelpCircle,
-  Bell,
-  LogOut,
-  ArrowLeft
-} from 'lucide-react';
+import { Calendar, Clock, CreditCard, FileText, UserCheck, AlertCircle, Users, Bell, HelpCircle, Settings, ArrowLeft } from 'lucide-react';
 
 interface UserPanelProps {
-  onBackToAdmin: () => void;
+  onBackToAdmin?: () => void;
 }
 
-const UserPanel = ({ onBackToAdmin }: UserPanelProps) => {
+const AdminPanel = ({ onBackToAdmin }: UserPanelProps) => {
   const stats = [
     { title: 'Leave Balance', value: '15 Days', icon: Calendar, trend: '+2 from last month' },
     { title: 'Attendance', value: '98.5%', icon: UserCheck, trend: 'This month' },
@@ -47,12 +32,13 @@ const UserPanel = ({ onBackToAdmin }: UserPanelProps) => {
 
   return (
     <div className="space-y-6 p-6">
-      {/* Header with back button */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon" onClick={onBackToAdmin}>
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
+          {onBackToAdmin && (
+            <Button variant="outline" size="icon" onClick={onBackToAdmin}>
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          )}
           <div>
             <h1 className="text-3xl font-bold text-foreground">Employee Dashboard</h1>
             <p className="text-muted-foreground">Welcome back, John Doe • Employee ID: EMP001</p>
@@ -76,7 +62,6 @@ const UserPanel = ({ onBackToAdmin }: UserPanelProps) => {
         </div>
       </div>
 
-      {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
           <Card key={index} className="bg-gradient-to-br from-card to-accent/10 border-l-4 border-l-primary">
@@ -96,7 +81,6 @@ const UserPanel = ({ onBackToAdmin }: UserPanelProps) => {
         ))}
       </div>
 
-      {/* Quick Actions */}
       <Card>
         <CardHeader>
           <CardTitle>Quick Actions</CardTitle>
@@ -123,7 +107,6 @@ const UserPanel = ({ onBackToAdmin }: UserPanelProps) => {
         </CardContent>
       </Card>
 
-      {/* Recent Activities */}
       <Card>
         <CardHeader>
           <CardTitle>Recent Activities</CardTitle>
@@ -150,4 +133,4 @@ const UserPanel = ({ onBackToAdmin }: UserPanelProps) => {
   );
 };
 
-export default UserPanel;
+export default AdminPanel;

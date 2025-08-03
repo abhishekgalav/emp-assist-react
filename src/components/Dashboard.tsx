@@ -7,24 +7,29 @@ import LeaveManagement from '@/components/LeaveManagement';
 import AttendanceTracking from '@/components/AttendanceTracking';
 import SalaryBenefits from '@/components/SalaryBenefits';
 import DocumentManagement from '@/components/DocumentManagement';
-import { 
-  Calendar, 
-  Clock, 
-  MessageSquare, 
-  Users, 
-  FileText, 
+import HRReporting from '@/components/HRReporting';
+import AdminReporting from '@/components/AdminReporting';
+import EmployeeRegistration from '@/components/EmployeeRegistration';
+import AttendanceAnalysis from '@/components/AttendanceAnalysis';
+import SalaryManagement from '@/components/SalaryManagement';
+import {
+  Calendar,
+  Clock,
+  MessageSquare,
+  Users,
+  FileText,
   Settings,
   TrendingUp,
   AlertCircle,
-  CheckCircle2,
   UserCheck,
   CreditCard,
   HelpCircle,
   Bell,
   LogOut
 } from 'lucide-react';
+import Header from './ui/header';
 
-const HRDashboard = () => {
+const Dashboard = () => {
   const [selectedTab, setSelectedTab] = useState('dashboard');
 
   const quickActions = [
@@ -54,48 +59,8 @@ const HRDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-card to-accent/5 border-b border-border px-6 py-4 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-              <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                <Users className="h-5 w-5 text-primary-foreground" />
-              </div>
-              CompanyHR Portal
-            </h1>
-            <p className="text-muted-foreground">Welcome back, John Doe • Employee ID: EMP001</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <Button variant="outline" size="icon">
-                <Bell className="h-4 w-4" />
-              </Button>
-              <div className="absolute -top-1 -right-1 h-3 w-3 bg-destructive rounded-full flex items-center justify-center">
-                <span className="text-xs text-destructive-foreground">3</span>
-              </div>
-            </div>
-            <Button variant="outline" size="icon">
-              <HelpCircle className="h-4 w-4" />
-            </Button>
-            <Button variant="outline" size="icon">
-              <Settings className="h-4 w-4" />
-            </Button>
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground text-sm font-medium">JD</span>
-              </div>
-              <Button variant="ghost" size="sm">
-                <LogOut className="h-4 w-4 mr-2" />
-                Logout
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
+      <Header name={'Ram'} employeeId={'Emp1003'} unreadNotifications={2} initials={'R'} />
       <div className="flex">
-        {/* Sidebar */}
         <aside className="w-64 bg-card border-r border-border min-h-screen p-4">
           <nav className="space-y-2">
             {[
@@ -106,19 +71,14 @@ const HRDashboard = () => {
               { id: 'documents', label: 'Documents', icon: FileText },
               { id: 'chat', label: 'HR Assistant', icon: MessageSquare },
               { id: 'hr-reporting', label: 'HR Reports', icon: FileText },
-              { id: 'admin-reporting', label: 'Admin Reports', icon: Settings },
+              { id: 'admin-reporting', label: 'Admin Reporting', icon: FileText },
+              { id: 'employee-registration', label: 'Employee Registration', icon: Users },
+              { id: 'attendance-analysis', label: 'Attendance Analysis', icon: UserCheck },
+              { id: 'salary-management', label: 'Salary Management', icon: CreditCard },
             ].map((item) => (
               <button
                 key={item.id}
-                onClick={() => {
-                  if (item.id === 'hr-reporting') {
-                    window.location.href = '/hr-reporting';
-                  } else if (item.id === 'admin-reporting') {
-                    window.location.href = '/admin-reporting';
-                  } else {
-                    setSelectedTab(item.id);
-                  }
-                }}
+                onClick={() => setSelectedTab(item.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                   selectedTab === item.id 
                     ? 'bg-primary text-primary-foreground' 
@@ -132,11 +92,9 @@ const HRDashboard = () => {
           </nav>
         </aside>
 
-        {/* Main Content */}
         <main className="flex-1 p-6">
           {selectedTab === 'dashboard' && (
             <div className="space-y-6">
-              {/* Stats Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, index) => (
                   <Card key={index} className="bg-gradient-to-br from-card to-accent/10">
@@ -156,7 +114,6 @@ const HRDashboard = () => {
                 ))}
               </div>
 
-              {/* Quick Actions */}
               <Card>
                 <CardHeader>
                   <CardTitle>Quick Actions</CardTitle>
@@ -184,7 +141,6 @@ const HRDashboard = () => {
                 </CardContent>
               </Card>
 
-              {/* Recent Activities */}
               <Card>
                 <CardHeader>
                   <CardTitle>Recent Activities</CardTitle>
@@ -210,23 +166,20 @@ const HRDashboard = () => {
             </div>
           )}
 
-          {selectedTab === 'chat' && (
-            <div className="h-[calc(100vh-200px)]">
-              <HRAssistantChat />
-            </div>
-          )}
-
+          {selectedTab === 'chat' && <div className="h-[calc(100vh-200px)]"><HRAssistantChat /></div>}
           {selectedTab === 'leave' && <LeaveManagement />}
-          
           {selectedTab === 'attendance' && <AttendanceTracking />}
-          
           {selectedTab === 'salary' && <SalaryBenefits />}
-          
           {selectedTab === 'documents' && <DocumentManagement />}
+          {selectedTab === 'hr-reporting' && <HRReporting />}
+          {selectedTab === 'admin-reporting' && <AdminReporting />}
+          {selectedTab === 'employee-registration' && <EmployeeRegistration />}
+          {selectedTab === 'attendance-analysis' && <AttendanceAnalysis />}
+          {selectedTab === 'salary-management' && <SalaryManagement />}
         </main>
       </div>
     </div>
   );
 };
 
-export default HRDashboard;
+export default Dashboard;

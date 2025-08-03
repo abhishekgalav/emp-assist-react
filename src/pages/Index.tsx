@@ -1,8 +1,8 @@
 import React from 'react';
-import HRDashboard from '@/components/HRDashboard';
+import Dashboard from '@/components/Dashboard';
 
 const Index = () => {
-  return <HRDashboard />;
+  return <Dashboard />;
 };
 
 export default Index;
