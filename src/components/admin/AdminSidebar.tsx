@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Users, Building2, FileText, Calculator, Calendar, FolderOpen, BarChart3, Settings, UserPlus, CheckSquare, Shield } from 'lucide-react';
+import { Users, Building2, FileText, Calculator, Calendar, FolderOpen, BarChart3, Settings, UserPlus, CheckSquare, Shield, DollarSign } from 'lucide-react';
 
 interface AdminSidebarProps {
   selectedTab: string;
@@ -14,6 +14,7 @@ const AdminSidebar = ({ selectedTab, onTabChange }: AdminSidebarProps) => {
     { id: 'company-structure', label: 'Company Structure', icon: Building2 },
     { id: 'hr-policies', label: 'HR Policies', icon: FileText },
     { id: 'payroll-settings', label: 'Payroll Settings', icon: Calculator },
+    { id: 'salary-management', label: 'Salary Management', icon: DollarSign },
     { id: 'leave-attendance', label: 'Leave & Attendance', icon: Calendar },
     { id: 'document-manager', label: 'Document Manager', icon: FolderOpen },
     { id: 'reports-analytics', label: 'Reports & Analytics', icon: BarChart3 },

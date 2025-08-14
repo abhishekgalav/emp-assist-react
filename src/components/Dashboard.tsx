@@ -11,7 +11,6 @@ import HRReporting from '@/components/HRReporting';
 import AdminReporting from '@/components/AdminReporting';
 import EmployeeRegistration from '@/components/EmployeeRegistration';
 import AttendanceAnalysis from '@/components/AttendanceAnalysis';
-import SalaryManagement from '@/components/SalaryManagement';
 import {
   Calendar,
   Clock,
@@ -74,7 +73,6 @@ const Dashboard = () => {
               { id: 'admin-reporting', label: 'Admin Reporting', icon: FileText },
               { id: 'employee-registration', label: 'Employee Registration', icon: Users },
               { id: 'attendance-analysis', label: 'Attendance Analysis', icon: UserCheck },
-              { id: 'salary-management', label: 'Salary Management', icon: CreditCard },
             ].map((item) => (
               <button
                 key={item.id}
@@ -175,7 +173,6 @@ const Dashboard = () => {
           {selectedTab === 'admin-reporting' && <AdminReporting />}
           {selectedTab === 'employee-registration' && <EmployeeRegistration />}
           {selectedTab === 'attendance-analysis' && <AttendanceAnalysis />}
-          {selectedTab === 'salary-management' && <SalaryManagement />}
         </main>
       </div>
     </div>

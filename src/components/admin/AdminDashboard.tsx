@@ -4,6 +4,7 @@ import UserAccessManagement from './UserAccessManagement';
 import CompanyStructure from './CompanyStructure';
 import HRPolicies from './HRPolicies';
 import PayrollSettings from './PayrollSettings';
+import SalaryManagement from './SalaryManagement';
 import LeaveAttendanceSettings from './LeaveAttendanceSettings';
 import DocumentManager from './DocumentManager';
 import ReportsAnalytics from './ReportsAnalytics';
@@ -28,6 +29,8 @@ const AdminDashboard = () => {
         return <HRPolicies />;
       case 'payroll-settings':
         return <PayrollSettings />;
+      case 'salary-management':
+        return <SalaryManagement />;
       case 'leave-attendance':
         return <LeaveAttendanceSettings />;
       case 'document-manager':
