@@ -8,6 +8,9 @@ import LeaveAttendanceSettings from './LeaveAttendanceSettings';
 import DocumentManager from './DocumentManager';
 import ReportsAnalytics from './ReportsAnalytics';
 import Dashboard from './Dashboard';
+import SystemConfig from './SystemConfig';
+import OnboardingOffboarding from './OnboardingOffboarding';
+import ComplianceAudit from './ComplianceAudit';
 
 
 const AdminDashboard = () => {
@@ -31,8 +34,14 @@ const AdminDashboard = () => {
         return <DocumentManager />;
       case 'reports-analytics':
         return <ReportsAnalytics />;
+      case 'system-config':
+        return <SystemConfig />;
+      case 'onboarding':
+        return <OnboardingOffboarding />;
+      case 'compliance':
+        return <ComplianceAudit />;
       default:
-        return <UserAccessManagement />;
+        return <Dashboard />;
     }
   };
 
