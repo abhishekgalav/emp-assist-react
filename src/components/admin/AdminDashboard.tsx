@@ -7,12 +7,16 @@ import PayrollSettings from './PayrollSettings';
 import LeaveAttendanceSettings from './LeaveAttendanceSettings';
 import DocumentManager from './DocumentManager';
 import ReportsAnalytics from './ReportsAnalytics';
+import Dashboard from './Dashboard';
+
 
 const AdminDashboard = () => {
-  const [selectedTab, setSelectedTab] = useState('user-access');
+  const [selectedTab, setSelectedTab] = useState('dashboard');
 
   const renderContent = () => {
     switch (selectedTab) {
+      case 'dashboard':
+        return <Dashboard />;
       case 'user-access':
         return <UserAccessManagement />;
       case 'company-structure':

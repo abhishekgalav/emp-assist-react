@@ -9,6 +9,7 @@ interface AdminSidebarProps {
 
 const AdminSidebar = ({ selectedTab, onTabChange }: AdminSidebarProps) => {
   const menuItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: Shield },
     { id: 'user-access', label: 'User Access Management', icon: Users },
     { id: 'company-structure', label: 'Company Structure', icon: Building2 },
     { id: 'hr-policies', label: 'HR Policies', icon: FileText },
